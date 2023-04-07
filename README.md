@@ -1,1 +1,1 @@
-https://sheveleffroman.github.io/BookShopTest/index.html
+https://sheveleffroman.github.io/book-shop/index.html
