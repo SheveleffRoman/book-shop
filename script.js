@@ -10,6 +10,7 @@ fetch('./assets/books.json') // path to the file with json data
         createCards(books);
     });
 
+
 function createHTMLTag(parentElement = null, tagName, attributes = {}, content = '', where = 'beforeend') {
     const element = document.createElement(tagName);
 
@@ -43,7 +44,7 @@ function createCards() {
             `<img class="bookCardLogo" src="${item.imageLink}" alt="">
                     <div class="bookCreds"><div class="bookTitle"><h3>${item.title}</h3></div>
                     <div class="bookAuthor"><h4>${item.author}</h4></div></div>
-                    <button class="showMore">Show More</button>
+                    <button class="showMore" data-id="${books.indexOf(item)}">Show More</button>
                     <div class="buy"><div class="bookPrice">$${item.price}</div>
                     <button class="addToCart">Add to Cart</button></div>`)
     });
@@ -51,5 +52,67 @@ function createCards() {
 
 
 
+const modalWindow = createHTMLTag(header, 'div', {'class': 'modalWindowContainer hideModal'},'', 'afterend');
+const imgModal = createHTMLTag(modalWindow, 'div', {'class':'imgModal'}, '');
+const img = createHTMLTag(imgModal, 'img', {'src': ''});
+const descriptionModal = createHTMLTag(modalWindow, 'div', {'class': 'descrModal'}, '');
+const description = createHTMLTag(descriptionModal, 'div', {'class': 'description'}, '')
+const authorDescr = createHTMLTag(descriptionModal, 'div', {'class': 'author'}, '');
+const titleDescr = createHTMLTag(descriptionModal,'div', {'class':'title'},'')
+const modalCloseBtn = createHTMLTag(modalWindow, 'button', {'class': 'modalClose', 'id': 'modalClose'}, 'X');
 
 
+/*function logClick() {
+    const elements = document.querySelectorAll('*'); // выбираем все элементы на странице
+
+    // добавляем обработчик клика на каждый элемент
+    elements.forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            console.log(event.target); // выводим элемент на который был клик в консоль
+            event.stopPropagation(); // останавливаем всплытие события
+        });
+    });
+}
+
+
+logClick();*/
+
+function createModalWindow(i) {
+    img.src = `${books[i].imageLink}`;
+    description.textContent = `${books[i].description}`;
+    authorDescr.textContent = `${books[i].author}`;
+    titleDescr.textContent = `${books[i].title}`
+}
+
+
+function openModalWindow() {
+
+    function handleClick(event) {
+        const button = event.target;
+
+        if (button.classList.contains('showMore')) {
+            modalWindow.classList.remove('hideModal');// показываем модальное окно
+        }
+        createModalWindow(button.dataset.id);
+        modalCloseBtn.addEventListener('click', function() {
+            modalWindow.classList.add('hideModal'); // удаляем класс some-class с элемента N
+        });
+
+
+    }
+
+    logElementOnClick(handleClick);// передаем функцию handleClick в качестве аргумента
+}
+
+function logElementOnClick(callback) {
+    const elements = document.querySelectorAll('*'); // выбираем все элементы на странице
+
+    // добавляем обработчик клика на каждый элемент
+    elements.forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            callback(event);// вызываем функцию обратного вызова, передавая объект события
+        });
+    });
+}
+
+openModalWindow();

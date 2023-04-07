@@ -197,3 +197,55 @@ h4 {
     background-color: #ffeaec;
     cursor: pointer;
 }
+
+.modalWindowContainer {
+    background-color: #595555;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 500px;
+    z-index: 1;
+    padding: 15px;
+}
+
+.hideModal {
+    display: none;
+}
+
+.imgModal {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+}
+
+.descrModal {
+    width: 400px;
+    height: 400px;
+    background-color: darkslategray;
+}
+
+.description {
+    height: 70%;
+    background-color: #a66369;
+}
+
+.modalClose {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    background-color: #78ad36; /* Green */
+    border: none;
+    border-radius: 50%;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+}
