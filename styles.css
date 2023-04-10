@@ -70,18 +70,25 @@ select {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
-header.wrapper {
+header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 10px;
     background-color: #646da9;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    max-width: 1200px;
+    width: 100%;
+    padding: 10px;
 
 }
 
+main {
+    margin-top: 100px;
+}
 
 
 h1 {
@@ -133,7 +140,6 @@ h4 {
 .bookCatalog {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
     justify-content: center;
 }
 

@@ -38,15 +38,18 @@ function createHTMLTag(parentElement = null, tagName, attributes = {}, content =
     return element;
 }
 
-const main = document.querySelector('main');
-const header = createHTMLTag(main, 'header', {'class': 'wrapper'},'', 'beforebegin');
-const logoDiv = createHTMLTag(header, 'div', {'class': 'logo'},'<h1 class="title">Book Heaven</h1><h2 class="subTitle">Discover Your Next Favorite Read</h2>')
-const bagDiv = createHTMLTag(header, 'div', {'class': 'bag'}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag"><span>1</span></span><span>Your cart</span>')
+// const main = document.querySelector('main');
+const body = document.querySelector('body');
+const wrapper = createHTMLTag(body, 'div', {'class': 'wrapper'},'', 'afterbegin')
+const header = createHTMLTag(wrapper, 'header');
+const logoDiv = createHTMLTag(header, 'div', {'class': 'logo'},'<h1 class="title">Book Heaven</h1><h2 class="subTitle">Discover Your Next Favorite Read</h2>');
+const bagDiv = createHTMLTag(header, 'div', {'class': 'bag'}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag"><span>1</span></span><span>Your cart</span>');
+const main = createHTMLTag(wrapper,'main')
 const bookCatalog = createHTMLTag(main, 'div', {'class': 'bookCatalog'})
 
 
 
-const modalWindow = createHTMLTag(header, 'div', {'class': 'modalWindowContainer hideModal'},'', 'afterend');
+const modalWindow = createHTMLTag(wrapper, 'div', {'class': 'modalWindowContainer hideModal'},'', 'afterend');
 const imgModal = createHTMLTag(modalWindow, 'div', {'class':'imgModal'}, '');
 const img = createHTMLTag(imgModal, 'img', {'src': ''});
 const descriptionModal = createHTMLTag(modalWindow, 'div', {'class': 'descrModal'}, '');
