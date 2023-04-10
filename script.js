@@ -1,14 +1,20 @@
-const books = [];
+let dataArray;
+function getData() {
+    return fetch('./assets/books.json')
+        .then(response => response.json())
+        .then(data => {
+            dataArray = data;
+            return dataArray;
+        })
+        .catch(error => console.error(error));
+}
 
-fetch('./assets/books.json') // path to the file with json data
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        books.push(...data);
-        console.log(books);
-        createCards(books);
-    });
+getData().then(dataArray => {
+    console.log(dataArray); // Выведет массив данных
+    createCards(dataArray);// сделает карточки и заполнит
+    openModal(); // открываем и закрывваем окно
+    closeModal();
+});
 
 
 function createHTMLTag(parentElement = null, tagName, attributes = {}, content = '', where = 'beforeend') {
@@ -38,18 +44,6 @@ const logoDiv = createHTMLTag(header, 'div', {'class': 'logo'},'<h1 class="title
 const bagDiv = createHTMLTag(header, 'div', {'class': 'bag'}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag"><span>1</span></span><span>Your cart</span>')
 const bookCatalog = createHTMLTag(main, 'div', {'class': 'bookCatalog'})
 
-function createCards() {
-    books.forEach((item) => {
-        createHTMLTag(bookCatalog, 'div', {'id': `${books.indexOf(item) + 1}`, 'class': 'card'},
-            `<img class="bookCardLogo" src="${item.imageLink}" alt="">
-                    <div class="bookCreds"><div class="bookTitle"><h3>${item.title}</h3></div>
-                    <div class="bookAuthor"><h4>${item.author}</h4></div></div>
-                    <button class="showMore" data-id="${books.indexOf(item)}">Show More</button>
-                    <div class="buy"><div class="bookPrice">$${item.price}</div>
-                    <button class="addToCart">Add to Cart</button></div>`)
-    });
-}
-
 
 
 const modalWindow = createHTMLTag(header, 'div', {'class': 'modalWindowContainer hideModal'},'', 'afterend');
@@ -77,42 +71,36 @@ const modalCloseBtn = createHTMLTag(modalWindow, 'button', {'class': 'modalClose
 
 logClick();*/
 
-function createModalWindow(i) {
-    img.src = `${books[i].imageLink}`;
-    description.textContent = `${books[i].description}`;
-    authorDescr.textContent = `${books[i].author}`;
-    titleDescr.textContent = `${books[i].title}`
-}
-
-
-function openModalWindow() {
-
-    function handleClick(event) {
-        const button = event.target;
-
-        if (button.classList.contains('showMore')) {
-            modalWindow.classList.remove('hideModal');// показываем модальное окно
-        }
-        createModalWindow(button.dataset.id);
-        modalCloseBtn.addEventListener('click', function() {
-            modalWindow.classList.add('hideModal'); // удаляем класс some-class с элемента N
-        });
-
-
-    }
-
-    logElementOnClick(handleClick);// передаем функцию handleClick в качестве аргумента
-}
-
-function logElementOnClick(callback) {
-    const elements = document.querySelectorAll('*'); // выбираем все элементы на странице
-
-    // добавляем обработчик клика на каждый элемент
-    elements.forEach(function(element) {
-        element.addEventListener('click', function(event) {
-            callback(event);// вызываем функцию обратного вызова, передавая объект события
-        });
+function createCards(arr) {
+    arr.forEach((item) => {
+        createHTMLTag(bookCatalog, 'div', {'id': `${arr.indexOf(item) + 1}`, 'class': 'card'},
+            `<img class="bookCardLogo" src="${item.imageLink}" alt="">
+                    <div class="bookCreds"><div class="bookTitle"><h3>${item.title}</h3></div>
+                    <div class="bookAuthor"><h4>${item.author}</h4></div></div>
+                    <button class="showMore" data-id="${arr.indexOf(item)}">Show More</button>
+                    <div class="buy"><div class="bookPrice">$${item.price}</div>
+                    <button class="addToCart">Add to Cart</button></div>`)
     });
 }
 
-openModalWindow();
+function openModal() {
+    const buttons = document.querySelectorAll('button.showMore');
+    console.log(buttons);
+    buttons.forEach((item) => {
+        item.addEventListener('click', () => {
+            pasteContentModalWindow(item.dataset.id);
+            modalWindow.classList.remove('hideModal')
+        })
+    })
+}
+
+function pasteContentModalWindow(i) {
+    img.src = `${dataArray[i].imageLink}`;
+    description.textContent = `${dataArray[i].description}`;
+    authorDescr.textContent = `${dataArray[i].author}`;
+    titleDescr.textContent = `${dataArray[i].title}`
+}
+
+function closeModal() {
+    modalCloseBtn.addEventListener('click', () => modalWindow.classList.add('hideModal'))
+}
