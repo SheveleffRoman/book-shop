@@ -14,6 +14,7 @@ getData().then(dataArray => {
     createCards(dataArray);// сделает карточки и заполнит
     openModal(); // открываем и закрывваем окно
     closeModal();
+    runCart();
 });
 
 
@@ -43,7 +44,7 @@ const body = document.querySelector('body');
 const wrapper = createHTMLTag(body, 'div', {'class': 'wrapper'},'', 'afterbegin')
 const header = createHTMLTag(wrapper, 'header');
 const logoDiv = createHTMLTag(header, 'div', {'class': 'logo'},'<h1 class="title">Book Heaven</h1><h2 class="subTitle">Discover Your Next Favorite Read</h2>');
-const bagDiv = createHTMLTag(header, 'div', {'class': 'bag'}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag"><span>1</span></span><span>Your cart</span>');
+const bagDiv = createHTMLTag(header, 'div', {'class': 'bag'}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag zero"><span>0</span></span><span>Your cart</span>');
 const main = createHTMLTag(wrapper,'main')
 const bookCatalog = createHTMLTag(main, 'div', {'class': 'bookCatalog'})
 
@@ -76,19 +77,19 @@ logClick();*/
 
 function createCards(arr) {
     arr.forEach((item) => {
-        createHTMLTag(bookCatalog, 'div', {'id': `${arr.indexOf(item) + 1}`, 'class': 'card'},
-            `<img class="bookCardLogo" src="${item.imageLink}" alt="">
+        createHTMLTag(bookCatalog, 'div', {'id': `${arr.indexOf(item)}`, 'class': 'card'},
+            `<img class="bookCardLogo" src="${item.imageLink}" draggable="true" alt="${item.title}">
                     <div class="bookCreds"><div class="bookTitle"><h3>${item.title}</h3></div>
                     <div class="bookAuthor"><h4>${item.author}</h4></div></div>
                     <button class="showMore" data-id="${arr.indexOf(item)}">Show More</button>
                     <div class="buy"><div class="bookPrice">$${item.price}</div>
-                    <button class="addToCart">Add to Cart</button></div>`)
+                    <button class="addToCart" data-id="${arr.indexOf(item)}" data-price="${item.price}">Add to Cart</button></div>`)
     });
 }
 
 function openModal() {
     const buttons = document.querySelectorAll('button.showMore');
-    console.log(buttons);
+    // console.log(buttons);
     buttons.forEach((item) => {
         item.addEventListener('click', () => {
             pasteContentModalWindow(item.dataset.id);
@@ -107,3 +108,113 @@ function pasteContentModalWindow(i) {
 function closeModal() {
     modalCloseBtn.addEventListener('click', () => modalWindow.classList.add('hideModal'))
 }
+
+
+function runCart() {
+
+const cartDiv = createHTMLTag(main, 'div', {'class': 'cart empty', 'id': 'cart'}, '','afterbegin');
+const cartName = createHTMLTag(cartDiv, 'h2', {},'Cart');
+const cartItems = createHTMLTag(cartDiv, 'ul', {'class': 'cart-items'});
+const totalPrice = createHTMLTag(cartDiv, 'p', {'class': 'price'}, `Total price: <span class="total-price">$0</span>`)
+
+const cartItemsSelector = document.querySelector(".cart-items");
+// console.log(cartItemsSelector);
+
+const totalPriceSelector = document.querySelector(".total-price");
+// console.log(totalPrice);
+
+// Инициализируем объект корзины
+const cart = [];
+
+// Функция добавления товара в корзину
+function addToCart(event) {
+    // Получаем цену товара из атрибута data
+    const price = parseInt(event.target.dataset.price);
+    const imgSrc = dataArray[event.target.dataset.id].imageLink;
+    // привяжем дата-аттрибут из кнопки "добавить в корзину
+    const id = event.target.dataset.id;
+
+    // Добавляем товар в корзину
+    cart.push({id: id, img: imgSrc, price: price, quantity: 1 });
+    console.log(cart);
+    const counter = document.querySelector('span.itemsBag');
+    // console.log(counter);
+    const btn = document.querySelector(`button.addToCart[data-id="${event.target.dataset.id}"]`);
+    // console.log(btn);
+    const card = document.getElementById(`${event.target.dataset.id}`);
+    card.classList.add('inCart');
+    btn.setAttribute('disabled', 'true')
+    btn.textContent = 'Added!'
+    counter.classList.remove('zero');
+    counter.firstChild.textContent = cart.length;
+    cartDiv.classList.remove('empty');
+
+
+
+    // Обновляем элементы корзины
+    renderCart();
+}
+
+// Функция удаления товара из корзины
+function removeFromCart(index) {
+    cart.splice(index, 1);
+
+    const counter = document.querySelector('span.itemsBag');
+    counter.classList.remove('zero');
+    counter.firstChild.textContent = cart.length;
+    if (cart.length < 1) {
+        counter.classList.add('zero');
+        cartDiv.classList.add('empty');
+    }
+    renderCart();
+}
+
+// Получаем кнопки "Add to cart"
+const addToCartButtons = document.querySelectorAll("button.addToCart");
+// console.log(addToCartButtons);
+
+addToCartButtons.forEach((button) => {
+    button.addEventListener("click", addToCart);
+});
+
+function renderCart() {
+    // Очищаем элементы корзины
+    cartItems.innerHTML = "";
+
+    // Обходим все товары в корзине
+    cart.forEach((item, index) => {
+        // Создаем элемент списка товаров в корзине
+        // в кнопку удаления записываю дата-аттрибут из кнопки "добавить в корзину", чтоб их связать
+        const li = createHTMLTag(cartItems, 'li', {'class': 'mini'},
+            `<img src="${item.img}"> $${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">Delete</button>`);
+
+
+        // Добавляем обработчик события на кнопку удаления товара из корзины
+        li.querySelector(".remove-from-cart").addEventListener("click", () => {
+            removeFromCart(index);
+            // снова включаем кнопку добавление в корзину
+            const btn = document.querySelector(`button.addToCart[data-id="${item.id}"]`);
+            // console.log(btn);
+            btn.removeAttribute('disabled');
+            btn.textContent = 'Add to Cart';
+            const card = document.getElementById(`${event.target.dataset.id}`);
+            card.classList.remove('inCart')
+
+        });
+
+        // Добавляем обработчик события на поле ввода количества товара
+        li.querySelector("input").addEventListener("change", (event) => {
+            const quantity = parseInt(event.target.value);
+            if (quantity <= 0) {
+                removeFromCart(index);
+            } else {
+                cart[index].quantity = quantity;
+                renderCart();
+            }
+        });
+    });
+
+    // Обновляем общую стоимость
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    totalPriceSelector.textContent = `$${total}`;
+}}
