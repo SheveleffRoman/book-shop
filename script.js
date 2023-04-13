@@ -211,13 +211,13 @@ function runCart() {
                 if (quantity <= 0) {
                     removeFromCart(index);
                     // на случай, если будет поставлен 0 в количество товара
-                    // const removeBtn = li.querySelector('input').nextElementSibling;
+                    const removeBtn = li.querySelector('input').nextElementSibling;
                     // console.log(removeBtn);
-                    // const card = document.getElementById(`${removeBtn.dataset.id}`);
-                    // card.classList.remove('inCart');
-                    // const btn = document.querySelector(`button.addToCart[data-id="${removeBtn.dataset.id}"]`);
-                    // btn.removeAttribute('disabled');
-                    // btn.textContent = 'Add to Cart';
+                    const card = document.getElementById(`${removeBtn.dataset.id}`);
+                    card.classList.remove('inCart');
+                    const btn = document.querySelector(`button.addToCart[data-id="${removeBtn.dataset.id}"]`);
+                    btn.removeAttribute('disabled');
+                    btn.textContent = 'Add to Cart';
                 } else {
                     cart[index].quantity = quantity;
                     renderCart();
