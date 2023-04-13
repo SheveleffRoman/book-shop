@@ -10,6 +10,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
+<main>
+    <header></header>
+    <section class="cart"></section>
+    <section class="form">
+        <form method="post">
+            <h2 class="form-title">Please fill the following purchase order form:</h2>
+            <fieldset class="personal-info">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required autofocus="" minlength="4">
+
+                <label for="surname">Surname:</label>
+                <input type="text" id="surname" name="surname" required minlength="5">
+            </fieldset>
+            <fieldset class="address">
+                <legend>Delivery information:</legend>
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street" required minlength="5">
+
+                <label for="house-number">House number:</label>
+                <input type="number" id="house-number" name="house-number" required min="1">
+
+                <label for="flat-number">Flat number:</label>
+                <input type="number" id="flat-number" name="flat-number" required>
+
+                <label for="delivery-date">Delivery date:</label>
+                <input type="date" id="delivery-date" name="delivery-date" required min="2023-04-14">
+            </fieldset>
+            <fieldset id="payment">
+                <legend>Please choose payment method:</legend>
+                <div>
+                    <input type="radio" id="cash" name="payment" value="cash" required>
+                    <label for="cash">Cash</label>
+                </div>
+                <div>
+                    <input type="radio" id="card" name="payment" value="card" required>
+                    <label for="card">Card</label>
+                </div>
+            </fieldset>
+            <fieldset id="gifts">
+                <legend>Choose your gifts (2 items):</legend>
+                <div>
+                    <input type="checkbox" id="pack" name="gifts" value="pack">
+                    <label for="pack">Pack as a gift</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="postcard" name="gifts" value="postcard">
+                    <label for="postcard">Add postcard</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="discount" name="gifts" value="discount">
+                    <label for="discount">Provide 2% discount to the next time</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="pen" name="gifts" value="pen">
+                    <label for="pen">Branded pen or pencil</label>
+                </div>
+            </fieldset>
+            <button type="submit" class="form-submit-button" title="Fill required fields" disabled>Confirm</button>
+        </form>
+    </section>
+</main>
 <script src="form.js"></script>
 </body>
 </html>
