@@ -1,4 +1,5 @@
 let dataArray;
+
 function getData() {
     return fetch('./assets/books.json')
         .then(response => response.json())
@@ -14,7 +15,8 @@ getData().then(dataArray => {
     createCards(dataArray);// сделает карточки и заполнит
     openModal(); // открываем и закрывваем окно
     closeModal();
-    runCart();
+    runCart(); //  делает всю работу с карточками и корзиной
+    dragAndDrop(); // перетаскивания карточек
 });
 
 
@@ -41,22 +43,24 @@ function createHTMLTag(parentElement = null, tagName, attributes = {}, content =
 
 // const main = document.querySelector('main');
 const body = document.querySelector('body');
-const wrapper = createHTMLTag(body, 'div', {'class': 'wrapper'},'', 'afterbegin')
+const wrapper = createHTMLTag(body, 'div', {'class': 'wrapper'}, '', 'afterbegin')
 const header = createHTMLTag(wrapper, 'header');
-const logoDiv = createHTMLTag(header, 'div', {'class': 'logo'},'<h1 class="title">Book Heaven</h1><h2 class="subTitle">Discover Your Next Favorite Read</h2>');
-const bagDiv = createHTMLTag(header, 'div', {'class': 'bag'}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag zero"><span>0</span></span><span>Your cart</span>');
-const main = createHTMLTag(wrapper,'main')
-const bookCatalog = createHTMLTag(main, 'div', {'class': 'bookCatalog'})
+const logoDiv = createHTMLTag(header, 'div', {'class': 'logo'}, '<h1 class="title">Book Heaven</h1><h2 class="subTitle">Discover Your Next Favorite Read</h2>');
+const bagDiv = createHTMLTag(header, 'div', {
+    'id': 'bag',
+    'class': 'bag'
+}, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag zero"><span>0</span></span><span>Your cart</span>');
+const main = createHTMLTag(wrapper, 'main')
+const bookCatalog = createHTMLTag(main, 'div', {'id': 'catalog', 'class': 'bookCatalog'})
 
 
-
-const modalWindow = createHTMLTag(wrapper, 'div', {'class': 'modalWindowContainer hideModal'},'', 'afterend');
-const imgModal = createHTMLTag(modalWindow, 'div', {'class':'imgModal'}, '');
+const modalWindow = createHTMLTag(wrapper, 'div', {'class': 'modalWindowContainer hideModal'}, '', 'afterend');
+const imgModal = createHTMLTag(modalWindow, 'div', {'class': 'imgModal'}, '');
 const img = createHTMLTag(imgModal, 'img', {'src': ''});
 const descriptionModal = createHTMLTag(modalWindow, 'div', {'class': 'descrModal'}, '');
 const description = createHTMLTag(descriptionModal, 'div', {'class': 'description'}, '')
 const authorDescr = createHTMLTag(descriptionModal, 'div', {'class': 'author'}, '');
-const titleDescr = createHTMLTag(descriptionModal,'div', {'class':'title'},'')
+const titleDescr = createHTMLTag(descriptionModal, 'div', {'class': 'title'}, '')
 const modalCloseBtn = createHTMLTag(modalWindow, 'button', {'class': 'modalClose', 'id': 'modalClose'}, 'X');
 
 
@@ -77,8 +81,8 @@ logClick();*/
 
 function createCards(arr) {
     arr.forEach((item) => {
-        createHTMLTag(bookCatalog, 'div', {'id': `${arr.indexOf(item)}`, 'class': 'card'},
-            `<img class="bookCardLogo" src="${item.imageLink}" draggable="true" alt="${item.title}">
+        createHTMLTag(bookCatalog, 'div', {'id': `${arr.indexOf(item)}`, 'class': 'card', 'draggable': "true"},
+            `<img class="bookCardLogo" src="${item.imageLink}" alt="${item.title}">
                     <div class="bookCreds"><div class="bookTitle"><h3>${item.title}</h3></div>
                     <div class="bookAuthor"><h4>${item.author}</h4></div></div>
                     <button class="showMore" data-id="${arr.indexOf(item)}">Show More</button>
@@ -112,109 +116,179 @@ function closeModal() {
 
 function runCart() {
 
-const cartDiv = createHTMLTag(main, 'div', {'class': 'cart empty', 'id': 'cart'}, '','afterbegin');
-const cartName = createHTMLTag(cartDiv, 'h2', {},'Cart');
-const cartItems = createHTMLTag(cartDiv, 'ul', {'class': 'cart-items'});
-const totalPrice = createHTMLTag(cartDiv, 'p', {'class': 'price'}, `Total price: <span class="total-price">$0</span>`)
+    const cartDiv = createHTMLTag(main, 'div', {'class': 'cart empty', 'id': 'cart'}, '', 'afterbegin');
+    const cartName = createHTMLTag(cartDiv, 'h2', {}, 'Cart');
+    const cartItems = createHTMLTag(cartDiv, 'ul', {'class': 'cart-items'});
+    const totalPrice = createHTMLTag(cartDiv, 'p', {'class': 'price'}, `Total price: <span class="total-price">$0</span>`)
 
-const cartItemsSelector = document.querySelector(".cart-items");
+    const cartItemsSelector = document.querySelector(".cart-items");
 // console.log(cartItemsSelector);
 
-const totalPriceSelector = document.querySelector(".total-price");
+    const totalPriceSelector = document.querySelector(".total-price");
 // console.log(totalPrice);
 
-// Инициализируем объект корзины
-const cart = [];
+// создаем корзину
+    const cart = [];
 
 // Функция добавления товара в корзину
-function addToCart(event) {
-    // Получаем цену товара из атрибута data
-    const price = parseInt(event.target.dataset.price);
-    const imgSrc = dataArray[event.target.dataset.id].imageLink;
-    // привяжем дата-аттрибут из кнопки "добавить в корзину
-    const id = event.target.dataset.id;
+    function addToCart(event) {
+        // Получаем цену товара из атрибута data
+        const price = parseInt(event.target.dataset.price);
+        const imgSrc = dataArray[event.target.dataset.id].imageLink;
+        // привяжем дата-аттрибут из кнопки "добавить в корзину
+        const id = event.target.dataset.id;
 
-    // Добавляем товар в корзину
-    cart.push({id: id, img: imgSrc, price: price, quantity: 1 });
-    console.log(cart);
-    const counter = document.querySelector('span.itemsBag');
-    // console.log(counter);
-    const btn = document.querySelector(`button.addToCart[data-id="${event.target.dataset.id}"]`);
-    // console.log(btn);
-    const card = document.getElementById(`${event.target.dataset.id}`);
-    card.classList.add('inCart');
-    btn.setAttribute('disabled', 'true')
-    btn.textContent = 'Added!'
-    counter.classList.remove('zero');
-    counter.firstChild.textContent = cart.length;
-    cartDiv.classList.remove('empty');
+        // Добавляем товар в корзину
+        cart.push({id: id, img: imgSrc, price: price, quantity: 1});
+        console.log(cart);
+        const counter = document.querySelector('span.itemsBag');
+        // console.log(counter);
+        const btn = document.querySelector(`button.addToCart[data-id="${event.target.dataset.id}"]`);
+        // console.log(btn);
+        const card = document.getElementById(`${event.target.dataset.id}`);
+        card.classList.add('inCart');
+        btn.setAttribute('disabled', 'true')
+        btn.textContent = 'Added!'
+        counter.classList.remove('zero');
+        counter.firstChild.textContent = cart.length;
+        cartDiv.classList.remove('empty');
 
 
-
-    // Обновляем элементы корзины
-    renderCart();
-}
+        // Обновляем элементы корзины
+        renderCart();
+    }
 
 // Функция удаления товара из корзины
-function removeFromCart(index) {
-    cart.splice(index, 1);
+    function removeFromCart(index) {
+        cart.splice(index, 1);
 
-    const counter = document.querySelector('span.itemsBag');
-    counter.classList.remove('zero');
-    counter.firstChild.textContent = cart.length;
-    if (cart.length < 1) {
-        counter.classList.add('zero');
-        cartDiv.classList.add('empty');
+        const counter = document.querySelector('span.itemsBag');
+        counter.classList.remove('zero');
+        counter.firstChild.textContent = cart.length;
+        if (cart.length < 1) {
+            counter.classList.add('zero');
+            cartDiv.classList.add('empty');
+        }
+        renderCart();
     }
-    renderCart();
-}
 
 // Получаем кнопки "Add to cart"
-const addToCartButtons = document.querySelectorAll("button.addToCart");
+    const addToCartButtons = document.querySelectorAll("button.addToCart");
 // console.log(addToCartButtons);
 
-addToCartButtons.forEach((button) => {
-    button.addEventListener("click", addToCart);
-});
+    addToCartButtons.forEach((button) => {
+        button.addEventListener("click", addToCart);
+    });
 
-function renderCart() {
-    // Очищаем элементы корзины
-    cartItems.innerHTML = "";
+    function renderCart() {
+        // Очищаем элементы корзины
+        cartItems.innerHTML = "";
 
-    // Обходим все товары в корзине
-    cart.forEach((item, index) => {
-        // Создаем элемент списка товаров в корзине
-        // в кнопку удаления записываю дата-аттрибут из кнопки "добавить в корзину", чтоб их связать
-        const li = createHTMLTag(cartItems, 'li', {'class': 'mini'},
-            `<img src="${item.img}"> $${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">Delete</button>`);
+        // Обходим все товары в корзине
+        cart.forEach((item, index) => {
+            // Создаем элемент списка товаров в корзине
+            // в кнопку удаления записываем дата-аттрибут из кнопки "добавить в корзину", чтоб их связать
+            const li = createHTMLTag(cartItems, 'li', {'class': 'mini'},
+                `<img src="${item.img}"> $${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">Delete</button>`);
 
 
-        // Добавляем обработчик события на кнопку удаления товара из корзины
-        li.querySelector(".remove-from-cart").addEventListener("click", () => {
-            removeFromCart(index);
-            // снова включаем кнопку добавление в корзину
-            const btn = document.querySelector(`button.addToCart[data-id="${item.id}"]`);
-            // console.log(btn);
-            btn.removeAttribute('disabled');
-            btn.textContent = 'Add to Cart';
-            const card = document.getElementById(`${event.target.dataset.id}`);
-            card.classList.remove('inCart')
+            // Добавляем обработчик события на кнопку удаления товара из корзины
+            li.querySelector(".remove-from-cart").addEventListener("click", () => {
+                removeFromCart(index);
+                // снова включаем кнопку добавление в корзину
+                const btn = document.querySelector(`button.addToCart[data-id="${item.id}"]`);
+                // console.log(btn);
+                btn.removeAttribute('disabled');
+                btn.textContent = 'Add to Cart';
+                const card = document.getElementById(`${event.target.dataset.id}`);
+                card.classList.remove('inCart')
 
+            });
+
+            // Добавляем обработчик события на поле ввода количества товара
+            li.querySelector("input").addEventListener("change", (event) => {
+                const quantity = parseInt(event.target.value);
+                if (quantity <= 0) {
+                    removeFromCart(index);
+                    // на случай, если будет поставлен 0 в количество товара
+                    // const removeBtn = li.querySelector('input').nextElementSibling;
+                    // console.log(removeBtn);
+                    // const card = document.getElementById(`${removeBtn.dataset.id}`);
+                    // card.classList.remove('inCart');
+                    // const btn = document.querySelector(`button.addToCart[data-id="${removeBtn.dataset.id}"]`);
+                    // btn.removeAttribute('disabled');
+                    // btn.textContent = 'Add to Cart';
+                } else {
+                    cart[index].quantity = quantity;
+                    renderCart();
+                }
+            });
         });
 
-        // Добавляем обработчик события на поле ввода количества товара
-        li.querySelector("input").addEventListener("change", (event) => {
-            const quantity = parseInt(event.target.value);
-            if (quantity <= 0) {
-                removeFromCart(index);
-            } else {
-                cart[index].quantity = quantity;
-                renderCart();
-            }
+        // Обновляем общую стоимость
+        const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        totalPriceSelector.textContent = `$${total}`;
+    }
+}
+
+// drag and drop
+
+function dragAndDrop() {
+    const catalog = document.getElementById("catalog");
+    // console.log(catalog)
+    const cart = document.getElementById("bag"); // иконка
+    // console.log(cart)
+    const cartZone = document.getElementById('cart'); // зона корзины, когда непустая
+    // console.log(cartZone)
+
+// dragstart для каждой карточки товара
+    const cards = catalog.querySelectorAll(".card");
+    console.log(cards)
+    cards.forEach(card => {
+        card.addEventListener("dragstart", event => {
+            // найдем id перетаскиваемого элемента, далее он пригодится для поиска кнопок
+            event.dataTransfer.setData("text/plain", card.id);
+            // Устанавливаем разрешение на перемещение курсора в виде копии карточки
+            event.dataTransfer.effectAllowed = "copy";
         });
     });
 
-    // Обновляем общую стоимость
-    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    totalPriceSelector.textContent = `$${total}`;
-}}
+// dragover для иконки корзины
+    cart.addEventListener("dragover", event => {
+        // убираем стандартное поведение браузера, чтобы корзина стала активна
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+    });
+
+// drop для иконки корзины
+    cart.addEventListener("drop", event => {
+        event.preventDefault();
+        // console.log(event);
+        // Получаем id перетаскиваемого элемента из данных перетаскивания
+        const cardId = event.dataTransfer.getData("text/plain");
+        // console.log(cardId);
+        // найдем нужную кнопку Add to cart и делаем по ней клик
+        const addBtn = document.querySelector(`.addToCart[data-id="${cardId}"]`);
+        // console.log(addBtn)
+        addBtn.click();
+    });
+
+    // dragover для зоны корзины
+    cartZone.addEventListener("dragover", event => {
+        // убираем стандартное поведение браузера, чтобы корзина стала активна
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+    });
+    // drop для зоны корзины
+    cartZone.addEventListener("drop", event => {
+        event.preventDefault();
+        // console.log(event);
+        // Получаем id перетаскиваемого элемента из данных перетаскивания
+        const cardId = event.dataTransfer.getData("text/plain");
+        // console.log(cardId);
+        // найдем нужную кнопку Add to cart и делаем по ней клик
+        const addBtn = document.querySelector(`.addToCart[data-id="${cardId}"]`);
+        // console.log(addBtn)
+        addBtn.click();
+    });
+}
