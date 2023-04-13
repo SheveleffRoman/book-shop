@@ -119,7 +119,8 @@ function runCart() {
     const cartDiv = createHTMLTag(main, 'div', {'class': 'cart empty', 'id': 'cart'}, '', 'afterbegin');
     const cartName = createHTMLTag(cartDiv, 'h2', {}, 'Cart');
     const cartItems = createHTMLTag(cartDiv, 'ul', {'class': 'cart-items'});
-    const totalPrice = createHTMLTag(cartDiv, 'p', {'class': 'price'}, `Total price: <span class="total-price">$0</span>`)
+    const totalPrice = createHTMLTag(cartDiv, 'p', {'class': 'price'}, `Total price: <span class="total-price">$0</span>`);
+    const checkout = createHTMLTag(totalPrice, 'a', {'href': './form.html', 'id': 'checkout'}, 'checkout');
 
     const cartItemsSelector = document.querySelector(".cart-items");
 // console.log(cartItemsSelector);
@@ -140,7 +141,7 @@ function runCart() {
 
         // Добавляем товар в корзину
         cart.push({id: id, img: imgSrc, price: price, quantity: 1});
-        console.log(cart);
+        // console.log(cart);
         const counter = document.querySelector('span.itemsBag');
         // console.log(counter);
         const btn = document.querySelector(`button.addToCart[data-id="${event.target.dataset.id}"]`);
@@ -178,6 +179,24 @@ function runCart() {
 
     addToCartButtons.forEach((button) => {
         button.addEventListener("click", addToCart);
+    });
+
+    const checkoutBtn = document.getElementById('checkout');
+    console.log(checkoutBtn);
+    checkoutBtn.addEventListener("click", function(event) {
+        // Отменяем стандартное поведение ссылки, чтобы не переходить на новую страницу
+        event.preventDefault();
+
+        // Получаем данные корзины и преобразуем их в строку JSON
+        let cartJson = JSON.stringify(cart);
+        console.log(cartJson)
+
+        // Сохраняем данные корзины в cookie
+        document.cookie = "cart=" + cartJson + "; path=/";
+        console.log(document.cookie)
+
+        // Переходим на страницу оформления заказа
+        window.location.href = this.href;
     });
 
     function renderCart() {
@@ -236,7 +255,7 @@ function runCart() {
 function dragAndDrop() {
     const catalog = document.getElementById("catalog");
     // console.log(catalog)
-    const cart = document.getElementById("bag"); // иконка
+    const cartIcon = document.getElementById("bag"); // иконка
     // console.log(cart)
     const cartZone = document.getElementById('cart'); // зона корзины, когда непустая
     // console.log(cartZone)
@@ -254,14 +273,14 @@ function dragAndDrop() {
     });
 
 // dragover для иконки корзины
-    cart.addEventListener("dragover", event => {
+    cartIcon.addEventListener("dragover", event => {
         // убираем стандартное поведение браузера, чтобы корзина стала активна
         event.preventDefault();
         event.dataTransfer.dropEffect = "copy";
     });
 
 // drop для иконки корзины
-    cart.addEventListener("drop", event => {
+    cartIcon.addEventListener("drop", event => {
         event.preventDefault();
         // console.log(event);
         // Получаем id перетаскиваемого элемента из данных перетаскивания
