@@ -162,15 +162,16 @@ h4 {
     padding: 1.25rem;
 }
 
+.card:hover {
+    cursor: move;
+}
+
 .bookCardLogo {
     display: block;
     margin: 0 auto;
     height: 190px;
 }
 
-.bookCardLogo:hover {
-    cursor: move;
-}
 
 .bookCreds {
     flex-grow: 1;
@@ -214,7 +215,7 @@ h4 {
 }
 
 .addToCart:disabled:hover {
-
+    cursor: default;
 }
 
 .inCart {
