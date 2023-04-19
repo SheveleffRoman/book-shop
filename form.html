@@ -14,28 +14,34 @@
     <header></header>
     <section class="cart"></section>
     <section class="form">
-        <form method="post">
+        <form id="formCheckout" method="post" novalidate>
             <h2 class="form-title">Please fill the following purchase order form:</h2>
             <fieldset class="personal-info">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required autofocus="" minlength="4">
+                <input type="text" id="name" name="name" pattern="[A-Za-zА-Яа-я]+" minlength="4" required autofocus>
+                <span class="error" aria-live="polite"></span>
 
                 <label for="surname">Surname:</label>
-                <input type="text" id="surname" name="surname" required minlength="5">
+                <input type="text" id="surname" name="surname" pattern="[A-Za-zА-Яа-я]+" required minlength="5">
+                <span class="error" aria-live="polite"></span>
             </fieldset>
             <fieldset class="address">
                 <legend>Delivery information:</legend>
                 <label for="street">Street:</label>
                 <input type="text" id="street" name="street" required minlength="5">
+                <span class="error" aria-live="polite"></span>
 
                 <label for="house-number">House number:</label>
                 <input type="number" id="house-number" name="house-number" required min="1">
+                <span class="error" aria-live="polite"></span>
 
                 <label for="flat-number">Flat number:</label>
-                <input type="number" id="flat-number" name="flat-number" required>
+                <input type="text" id="flat-number" name="flat-number" pattern="^(?!-)[0-9-]+$" required>
+                <span class="error" aria-live="polite"></span>
 
                 <label for="delivery-date">Delivery date:</label>
-                <input type="date" id="delivery-date" name="delivery-date" required min="2023-04-14">
+                <input type="date" id="delivery-date" name="delivery-date" required min="" max="">
+                <span class="error" aria-live="polite"></span>
             </fieldset>
             <fieldset id="payment">
                 <legend>Please choose payment method:</legend>
@@ -47,27 +53,31 @@
                     <input type="radio" id="card" name="payment" value="card" required>
                     <label for="card">Card</label>
                 </div>
+                <span class="error" aria-live="polite"></span>
             </fieldset>
             <fieldset id="gifts">
                 <legend>Choose your gifts (2 items):</legend>
                 <div>
-                    <input type="checkbox" id="pack" name="gifts" value="pack">
+                    <input type="checkbox" id="pack" name="gifts" value="pack" required>
                     <label for="pack">Pack as a gift</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="postcard" name="gifts" value="postcard">
+                    <input type="checkbox" id="postcard" name="gifts" value="postcard" required>
                     <label for="postcard">Add postcard</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="discount" name="gifts" value="discount">
+                    <input type="checkbox" id="discount" name="gifts" value="discount" required>
                     <label for="discount">Provide 2% discount to the next time</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="pen" name="gifts" value="pen">
+                    <input type="checkbox" id="pen" name="gifts" value="pen" required>
                     <label for="pen">Branded pen or pencil</label>
                 </div>
+                <span class="error" aria-live="polite"></span>
             </fieldset>
-            <button type="submit" class="form-submit-button" title="Fill required fields" disabled>Confirm</button>
+            <button type="submit" class="form-submit-button" title="Fill required fields" >Confirm</button>
+<!--            <button type="reset">Reset</button>-->
+            <button><a href="./index.html">Main page</a></button>
         </form>
     </section>
 </main>
