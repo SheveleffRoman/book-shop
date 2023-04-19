@@ -23,15 +23,14 @@ const errorMessages = {
     patternHouse: 'Positive numbers only',
     patternFlat: 'Positive numbers only. Separating dash symbol is allowed',
     flatNumber: 'Enter flat number',
-    deliveryDate: 'Выберите дату доставки (не ранее завтрашнего дня)',
-    payment: 'Выберите способ оплаты',
-    gifts: 'Выберите два подарка',
+    deliveryDate: 'Choose delivery date (not earlier than tomorrow)',
+    payment: 'Choose a payment method',
+    gifts: 'Choose only two gifts',
 };
 
 
 const form  = document.getElementById('formCheckout');
 form.addEventListener('submit', function (event) {
-    // Если поле email валдно, позволяем форме отправляться
 
     if(!nameInput.validity.valid) {
         showErrorName();
@@ -76,7 +75,7 @@ nameInput.addEventListener('input', () => {
         errorName.textContent = ''; // Сбросить содержимое сообщения
         errorName.className = 'error'; // Сбросить визуальное состояние сообщения
     } else {
-        // Если поле не валидно, показываем правильную ошибку
+        // Если поле не валидно, показываем ошибку
         showErrorName();
     }
 })
@@ -99,12 +98,9 @@ const errorSurname = document.querySelector('#surname + span.error');
 
 surnameInput.addEventListener('input', () => {
     if (surnameInput.validity.valid) {
-        // Если на момент валидации какое-то сообщение об ошибке уже отображается,
-        // если поле валидно, удаляем сообщение
-        errorSurname.textContent = ''; // Сбросить содержимое сообщения
-        errorSurname.className = 'error'; // Сбросить визуальное состояние сообщения
+        errorSurname.textContent = '';
+        errorSurname.className = 'error';
     } else {
-        // Если поле не валидно, показываем правильную ошибку
         showErrorSurname();
     }
 })
@@ -126,12 +122,10 @@ const errorStreet = document.querySelector('#street + span.error');
 
 streetInput.addEventListener('input', () => {
     if (streetInput.validity.valid) {
-        // Если на момент валидации какое-то сообщение об ошибке уже отображается,
-        // если поле валидно, удаляем сообщение
-        errorStreet.textContent = ''; // Сбросить содержимое сообщения
-        errorStreet.className = 'error'; // Сбросить визуальное состояние сообщения
+
+        errorStreet.textContent = '';
+        errorStreet.className = 'error';
     } else {
-        // Если поле не валидно, показываем правильную ошибку
         showErrorStreet();
     }
 })
