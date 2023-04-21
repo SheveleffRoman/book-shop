@@ -3,16 +3,25 @@ body {
 }
 
 /* Это стили для не валидных полей */
-input:invalid{
+
+/*input:invalid{*/
+/*    border-color: #900;*/
+/*    background-color: #FDD;*/
+/*}*/
+
+/*input:focus:invalid {*/
+/*    outline: none;*/
+/*    border-color: #900;*/
+/*    background-color: #FDD;*/
+/*}*/
+
+.invalid {
+    outline: none;
     border-color: #900;
     background-color: #FDD;
 }
 
-input:focus:invalid {
-    outline: none;
-}
-
-/* Это стили для кастомных сообщений об ошибке */
+/* Это стили для сообщений об ошибке */
 .error {
     width  : 100%;
     padding: 0;

@@ -14,11 +14,11 @@
     <header></header>
     <section class="cart"></section>
     <section class="form">
-        <form id="formCheckout" method="post" novalidate>
+        <form id="formCheckout" novalidate>
             <h2 class="form-title">Please fill the following purchase order form:</h2>
             <fieldset class="personal-info">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" pattern="[A-Za-zА-Яа-я]+" minlength="4" required autofocus>
+                <input type="text" id="name" name="name" pattern="[A-Za-zА-Яа-я]+" minlength="4" required>
                 <span class="error" aria-live="polite"></span>
 
                 <label for="surname">Surname:</label>
@@ -56,21 +56,21 @@
                 <span class="error" aria-live="polite"></span>
             </fieldset>
             <fieldset id="gifts">
-                <legend>Choose your gifts (2 items):</legend>
+                <legend>Choose your gifts (max 2 items):</legend>
                 <div>
-                    <input type="checkbox" id="pack" name="gifts" value="pack" required>
+                    <input type="checkbox" id="pack" name="gift" value="pack" required>
                     <label for="pack">Pack as a gift</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="postcard" name="gifts" value="postcard" required>
+                    <input type="checkbox" id="postcard" name="gift" value="postcard" required>
                     <label for="postcard">Add postcard</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="discount" name="gifts" value="discount" required>
+                    <input type="checkbox" id="discount" name="gift" value="discount" required>
                     <label for="discount">Provide 2% discount to the next time</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="pen" name="gifts" value="pen" required>
+                    <input type="checkbox" id="pen" name="gift" value="pen" required>
                     <label for="pen">Branded pen or pencil</label>
                 </div>
                 <span class="error" aria-live="polite"></span>

@@ -1,6 +1,5 @@
 let cartCookie = document.cookie.replace(/(?:(?:^|.*;\s*)cart\s*=\s*([^;]*).*$)|^.*$/, "$1");
 let cart = JSON.parse(cartCookie);
-
 console.log(cart);
 
 // const form = document.querySelector('form');
@@ -12,7 +11,7 @@ console.log(cart);
 // const deliveryDateInput = form.querySelector('#delivery-date');
 // const paymentInputs = form.querySelectorAll('input[name="payment"]');
 // const giftsInputs = form.querySelectorAll('input[name="gifts"]');
-// const submitButton = form.querySelector('button[type="submit"]');
+
 
 const errorMessages = {
     name: 'Enter your name',
@@ -30,8 +29,9 @@ const errorMessages = {
 
 
 const form  = document.getElementById('formCheckout');
-form.addEventListener('submit', function (event) {
+const submitButton = form.querySelector('button[type="submit"]');
 
+    form.addEventListener('submit', function (event) {
     if(!nameInput.validity.valid) {
         showErrorName();
         event.preventDefault();
@@ -47,9 +47,9 @@ form.addEventListener('submit', function (event) {
     } else if (!flatInput.validity.valid) {
         showErrorFlat();
         event.preventDefault();
-    } else if (!date.validity.valid) {
+    } else if (!dateInput.validity.valid) {
         showErrorDate();
-        event.preventDefault()
+        event.preventDefault();
     }
     else if (!cash.validity.valid) {
         showErrorPay();
@@ -61,6 +61,14 @@ form.addEventListener('submit', function (event) {
         event.preventDefault();
     }
 });
+
+form.addEventListener('input', () => {
+    if (nameInput.validity.valid && surnameInput.validity.valid && streetInput.validity.valid
+        && houseInput.validity.valid && flatInput.validity.valid && dateInput.validity.valid && cash.validity.valid && card.validity.valid) {
+        submitButton.removeAttribute('disabled')
+    }
+})
+
 
 
 // name
@@ -74,11 +82,39 @@ nameInput.addEventListener('input', () => {
         // если поле валидно, удаляем сообщение
         errorName.textContent = ''; // Сбросить содержимое сообщения
         errorName.className = 'error'; // Сбросить визуальное состояние сообщения
+        nameInput.classList.remove('invalid')
     } else {
         // Если поле не валидно, показываем ошибку
+        submitButton.setAttribute('disabled', 'true');
+        nameInput.classList.add('invalid')
         showErrorName();
     }
 })
+
+// nameInput.addEventListener('focusin', () => {
+//     if (nameInput.validity.valid) {
+//         errorName.textContent = '';
+//         errorName.className = 'error';
+//         nameInput.classList.remove('invalid')
+//     } else {
+//         submitButton.setAttribute('disabled', 'true');
+//         nameInput.classList.add('invalid')
+//         showErrorName();
+//     }
+// })
+
+nameInput.addEventListener('focusout', () => {
+    if (nameInput.validity.valid) {
+        errorName.textContent = '';
+        errorName.className = 'error';
+        nameInput.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        nameInput.classList.add('invalid');
+        showErrorName();
+    }
+})
+
 
 function showErrorName() {
     if(nameInput.validity.valueMissing) {
@@ -100,7 +136,22 @@ surnameInput.addEventListener('input', () => {
     if (surnameInput.validity.valid) {
         errorSurname.textContent = '';
         errorSurname.className = 'error';
+        surnameInput.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        surnameInput.classList.add('invalid');
+        showErrorSurname();
+    }
+})
+
+surnameInput.addEventListener('focusout', () => {
+    if (surnameInput.validity.valid) {
+        errorSurname.textContent = '';
+        errorSurname.className = 'error';
+        surnameInput.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        surnameInput.classList.add('invalid');
         showErrorSurname();
     }
 })
@@ -122,10 +173,24 @@ const errorStreet = document.querySelector('#street + span.error');
 
 streetInput.addEventListener('input', () => {
     if (streetInput.validity.valid) {
-
         errorStreet.textContent = '';
         errorStreet.className = 'error';
+        streetInput.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        streetInput.classList.add('invalid');
+        showErrorStreet()
+    }
+})
+
+streetInput.addEventListener('focusout', () => {
+    if (streetInput.validity.valid) {
+        errorStreet.textContent = '';
+        errorStreet.className = 'error';
+        streetInput.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        streetInput.classList.add('invalid');
         showErrorStreet();
     }
 })
@@ -146,8 +211,23 @@ const errorHouse = document.querySelector('#house-number + span.error');
 houseInput.addEventListener('input', () => {
     if (houseInput.validity.valid) {
         errorHouse.textContent = '';
-        errorHouse.className = 'error'
+        errorHouse.className = 'error';
+        houseInput.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        houseInput.classList.add('invalid')
+        showErrorHouse()
+    }
+})
+
+houseInput.addEventListener('focusout', () => {
+    if (houseInput.validity.valid) {
+        errorHouse.textContent = '';
+        errorHouse.className = 'error';
+        houseInput.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        houseInput.classList.add('invalid')
         showErrorHouse()
     }
 })
@@ -172,8 +252,23 @@ const errorFlat = document.querySelector('#flat-number + span.error');
 flatInput.addEventListener('input', () => {
     if (flatInput.validity.valid) {
         errorFlat.textContent = '';
-        errorFlat.className = 'error'
+        errorFlat.className = 'error';
+        flatInput.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        flatInput.classList.add('invalid')
+        showErrorFlat()
+    }
+})
+
+flatInput.addEventListener('focusout', () => {
+    if (flatInput.validity.valid) {
+        errorFlat.textContent = '';
+        errorFlat.className = 'error';
+        flatInput.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        flatInput.classList.add('invalid')
         showErrorFlat()
     }
 })
@@ -189,19 +284,36 @@ function showErrorFlat() {
 
 
 //date
-const date = document.getElementById('delivery-date');
+const dateInput = document.getElementById('delivery-date');
 const errorDate = document.querySelector('#delivery-date + span.error');
-date.addEventListener('input', () => {
-    if (date.validity.valid) {
+dateInput.addEventListener('input', () => {
+    if (dateInput.validity.valid) {
         errorDate.textContent = '';
-        errorDate.className = 'error'
+        errorDate.className = 'error';
+        dateInput.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        dateInput.classList.add('invalid');
+        showErrorDate()
+    }
+})
+
+dateInput.addEventListener('focusout', () => {
+    if (dateInput.validity.valid) {
+        errorDate.textContent = '';
+        errorDate.className = 'error';
+        dateInput.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        dateInput.classList.add('invalid');
         showErrorDate()
     }
 })
 
 function showErrorDate() {
-    if (date.validity.valueMissing) {
+    if (dateInput.validity.valueMissing) {
+        errorDate.textContent = errorMessages.deliveryDate
+    } else if (dateInput.value < minDate) {
         errorDate.textContent = errorMessages.deliveryDate
     }
     errorDate.className = 'error active';
@@ -215,6 +327,7 @@ const tomorrow = new Date(today);
 tomorrow.setDate(today.getDate() + 1);
 const minDate = tomorrow.toISOString().split('T')[0];
 document.getElementById("delivery-date").setAttribute("min", minDate);
+// document.getElementById("delivery-date").setAttribute("value", minDate);
 
 // max date
 // const thirtyDay = new Date(today);
@@ -230,8 +343,23 @@ const errorPay = document.querySelector('#payment > span.error');
 cash.addEventListener('input', () => {
     if (cash.validity.valid) {
         errorPay.textContent = '';
-        errorPay.className = 'error'
+        errorPay.className = 'error';
+        cash.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        cash.classList.add('invalid');
+        showErrorPay()
+    }
+})
+
+cash.addEventListener('focusout', () => {
+    if (cash.validity.valid) {
+        errorPay.textContent = '';
+        errorPay.className = 'error';
+        cash.classList.remove('invalid')
+    } else {
+        submitButton.setAttribute('disabled', 'true');
+        cash.classList.add('invalid');
         showErrorPay()
     }
 })
@@ -239,8 +367,11 @@ cash.addEventListener('input', () => {
 card.addEventListener('input', () => {
     if (card.validity.valid) {
         errorPay.textContent = '';
-        errorPay.className = 'error'
+        errorPay.className = 'error';
+        card.classList.remove('invalid')
     } else {
+        submitButton.setAttribute('disabled', 'true');
+        card.classList.add('invalid');
         showErrorPay()
     }
 })
@@ -263,7 +394,8 @@ const gifts = document.querySelectorAll('input[type="checkbox"]');
             }
         }
         if (checkedCount > 2) {
-            showErrorGifts()
+            showErrorGifts();
+            submitButton.setAttribute('disabled', 'true')
         } else {
             errorGifts.textContent = '';
             errorGifts.className = 'error';
@@ -275,3 +407,25 @@ function showErrorGifts() {
     errorGifts.textContent = errorMessages.gifts;
     errorGifts.className = 'error active';
 }
+
+// form.addEventListener('submit', (event) => {
+//     event.preventDefault();
+//
+//     /*const formData = new FormData(form);
+//     const data = Object.fromEntries(formData.entries());*/
+//     const formData = new FormData(form); // создаем новый объект FormData на основе формы
+//
+//     // перебираем все чекбоксы
+//     const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+//     let selectedGifts = []; // создаем пустой массив для выбранных чекбоксов
+//     checkboxes.forEach(function(checkbox) {
+//         if (checkbox.checked) { // если чекбокс выбран, добавляем его значение в массив
+//             selectedGifts.push(checkbox.value);
+//         }
+//     });
+//
+//     // добавляем выбранные значения в объект FormData
+//     formData.append('selectedGifts', selectedGifts);
+//     const data = Object.fromEntries(formData.entries())
+//     console.log(data);
+// })
