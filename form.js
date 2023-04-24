@@ -2,6 +2,43 @@ let cartCookie = document.cookie.replace(/(?:(?:^|.*;\s*)cart\s*=\s*([^;]*).*$)|
 let cart = JSON.parse(cartCookie);
 console.log(cart);
 
+let dataArray;
+
+function getData() {
+    return fetch('./assets/books.json')
+        .then(response => response.json())
+        .then(data => {
+            dataArray = data;
+            return dataArray;
+        })
+        .catch(error => console.error(error));
+}
+
+getData().then(dataArray => {
+    runCart();
+});
+
+function createHTMLTag(parentElement = null, tagName, attributes = {}, content = '', where = 'beforeend') {
+    const element = document.createElement(tagName);
+
+    // Добавляем произвольные атрибуты: id, class, etc
+    for (const key in attributes) {
+        element.setAttribute(key, attributes[key]);
+    }
+
+    // Добавляем произвольный контент
+    if (content !== '') {
+        element.innerHTML = content;
+    }
+
+    // Вставляем элемент после указанного родительского элемента
+    if (parentElement !== null) {
+        parentElement.insertAdjacentElement(where, element);
+    }
+
+    return element;
+}
+
 // const form = document.querySelector('form');
 // const nameInput = form.querySelector('#name');
 // const surnameInput = form.querySelector('#surname');
@@ -28,11 +65,11 @@ const errorMessages = {
 };
 
 
-const form  = document.getElementById('formCheckout');
+const form = document.getElementById('formCheckout');
 const submitButton = form.querySelector('button[type="submit"]');
 
-    form.addEventListener('submit', function (event) {
-    if(!nameInput.validity.valid) {
+form.addEventListener('submit', function (event) {
+    if (!nameInput.validity.valid) {
         showErrorName();
         event.preventDefault();
     } else if (!surnameInput.validity.valid) {
@@ -50,8 +87,7 @@ const submitButton = form.querySelector('button[type="submit"]');
     } else if (!dateInput.validity.valid) {
         showErrorDate();
         event.preventDefault();
-    }
-    else if (!cash.validity.valid) {
+    } else if (!cash.validity.valid) {
         showErrorPay();
         event.preventDefault();
     } else if (!card.validity.valid) {
@@ -68,7 +104,6 @@ form.addEventListener('input', () => {
         submitButton.removeAttribute('disabled')
     }
 })
-
 
 
 // name
@@ -117,12 +152,12 @@ nameInput.addEventListener('focusout', () => {
 
 
 function showErrorName() {
-    if(nameInput.validity.valueMissing) {
+    if (nameInput.validity.valueMissing) {
         errorName.textContent = errorMessages.name;
-    } else if(nameInput.validity.patternMismatch) {
+    } else if (nameInput.validity.patternMismatch) {
         errorName.textContent = errorMessages.patternLetters;
-    } else if(nameInput.validity.tooShort) {
-        errorName.textContent = `Name should be at least ${ nameInput.minLength } characters; you entered ${ nameInput.value.length }.`;
+    } else if (nameInput.validity.tooShort) {
+        errorName.textContent = `Name should be at least ${nameInput.minLength} characters; you entered ${nameInput.value.length}.`;
     }
     errorName.className = 'error active';
 }
@@ -157,12 +192,12 @@ surnameInput.addEventListener('focusout', () => {
 })
 
 function showErrorSurname() {
-    if(surnameInput.validity.valueMissing) {
+    if (surnameInput.validity.valueMissing) {
         errorSurname.textContent = errorMessages.surname;
-    } else if(surnameInput.validity.patternMismatch) {
+    } else if (surnameInput.validity.patternMismatch) {
         errorSurname.textContent = errorMessages.patternLetters;
-    } else if(surnameInput.validity.tooShort) {
-        errorSurname.textContent = `Surname should be at least ${ surnameInput.minLength } characters; you entered ${ surnameInput.value.length }.`;
+    } else if (surnameInput.validity.tooShort) {
+        errorSurname.textContent = `Surname should be at least ${surnameInput.minLength} characters; you entered ${surnameInput.value.length}.`;
     }
     errorSurname.className = 'error active';
 }
@@ -196,10 +231,10 @@ streetInput.addEventListener('focusout', () => {
 })
 
 function showErrorStreet() {
-    if(streetInput.validity.valueMissing) {
+    if (streetInput.validity.valueMissing) {
         errorStreet.textContent = errorMessages.street;
-    } else if(streetInput.validity.tooShort) {
-        errorStreet.textContent = `Street should be at least ${ streetInput.minLength } characters; you entered ${ streetInput.value.length }.`;
+    } else if (streetInput.validity.tooShort) {
+        errorStreet.textContent = `Street should be at least ${streetInput.minLength} characters; you entered ${streetInput.value.length}.`;
     }
     errorStreet.className = 'error active';
 }
@@ -320,7 +355,6 @@ function showErrorDate() {
 }
 
 
-
 // min date
 const today = new Date();
 const tomorrow = new Date(today);
@@ -385,8 +419,8 @@ function showErrorPay() {
 
 //gifts
 const gifts = document.querySelectorAll('input[type="checkbox"]');
-    for (let i = 0; i < gifts.length; i++) {
-    gifts[i].addEventListener('change', function() {
+for (let i = 0; i < gifts.length; i++) {
+    gifts[i].addEventListener('change', function () {
         let checkedCount = 0;
         for (let j = 0; j < gifts.length; j++) {
             if (gifts[j].checked) {
@@ -403,29 +437,120 @@ const gifts = document.querySelectorAll('input[type="checkbox"]');
     });
 }
 const errorGifts = document.querySelector('#gifts > span.error')
+
 function showErrorGifts() {
     errorGifts.textContent = errorMessages.gifts;
     errorGifts.className = 'error active';
 }
 
-// form.addEventListener('submit', (event) => {
-//     event.preventDefault();
-//
-//     /*const formData = new FormData(form);
-//     const data = Object.fromEntries(formData.entries());*/
-//     const formData = new FormData(form); // создаем новый объект FormData на основе формы
-//
-//     // перебираем все чекбоксы
-//     const checkboxes = form.querySelectorAll('input[type="checkbox"]');
-//     let selectedGifts = []; // создаем пустой массив для выбранных чекбоксов
-//     checkboxes.forEach(function(checkbox) {
-//         if (checkbox.checked) { // если чекбокс выбран, добавляем его значение в массив
-//             selectedGifts.push(checkbox.value);
-//         }
-//     });
-//
-//     // добавляем выбранные значения в объект FormData
-//     formData.append('selectedGifts', selectedGifts);
-//     const data = Object.fromEntries(formData.entries())
-//     console.log(data);
-// })
+const subTotal = document.querySelector('.subTotal')
+submitButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form); // создаем FormData на основе формы
+
+    // перебираем все чекбоксы
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    let selectedGifts = []; // создаем пустой массив для выбранных чекбоксов
+    checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) { // если чекбокс выбран, добавляем его значение в массив
+            selectedGifts.push(checkbox.value);
+        }
+    });
+
+    // добавляем выбранные значения в объект FormData
+    formData.append('selectedGifts', selectedGifts);
+    const data = Object.fromEntries(formData.entries())
+    console.log(data);
+    /*let data = {};
+    for (let [name, value] of formData) {
+        if (data[name]) {
+            if (!Array.isArray(data[name])) {
+                data[name] = [data[name]];
+            }
+            data[name].push(value);
+        } else {
+            data[name] = value;
+        }
+    }
+    console.log(data);*/
+
+    const giftsString = selectedGifts.join(", ");
+
+    subTotal.innerHTML = `<h1>Your order successfully created</h1>
+                          <div>
+                          <div>Customer: ${data.name} ${data.surname}</div>
+                          <div>Delivery address: ${data.street} ${data['house-number'
+        ]}, flat: ${data['flat-number']}</div>
+                          <div>Date: ${data['delivery-date']}</div>
+                          <div>Payment type: ${data.payment}</div>
+                          <div>Gifts: ${giftsString}</div>
+                          <a class="toMain" href="index.html">To main page</a>
+</div>`
+    subTotal.classList.remove('hide')
+    submitForm()
+})
+
+function submitForm() {
+    const goMainPage = document.querySelector('.toMain')
+    goMainPage.addEventListener('click', () => {
+        form.submit()
+    })
+
+}
+
+
+const cartSection = document.querySelector('.cart')
+console.log(cartSection)
+
+function runCart() {
+    const cartDiv = createHTMLTag(cartSection, 'div', {'class': 'cart', 'id': 'cart'}, '', 'afterbegin');
+    const cartName = createHTMLTag(cartDiv, 'h2', {}, 'Cart');
+    const cartItems = createHTMLTag(cartDiv, 'ul', {'class': 'cart-items'});
+    const totalPrice = createHTMLTag(cartDiv, 'p', {'class': 'price'}, `Total price: <span class="total-price">$0</span>`);
+
+    renderCart()
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    function renderCart() {
+        cartItems.innerHTML = "";
+        cart.forEach((item, index) => {
+            const li = createHTMLTag(cartItems, 'li', {'class': 'mini'},
+                `<img src="${item.img}"> $${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">Delete</button>`);
+
+            li.querySelector(".remove-from-cart").addEventListener("click", () => {
+                removeFromCart(index);
+                if (cart.length < 1) {
+                    const exit = document.querySelector('.goMain')
+                    window.location.href = exit.firstChild.href
+
+                }
+            });
+
+            li.querySelector("input").addEventListener("change", (event) => {
+                const quantity = parseInt(event.target.value);
+                if (quantity <= 0) {
+                    removeFromCart(index);
+                    const removeBtn = li.querySelector('input').nextElementSibling;
+                    // console.log(removeBtn);
+                    const card = document.getElementById(`${removeBtn.dataset.id}`);
+                    card.classList.remove('inCart');
+                    const btn = document.querySelector(`button.addToCart[data-id="${removeBtn.dataset.id}"]`);
+                    btn.removeAttribute('disabled');
+                    btn.textContent = 'Add to Cart';
+                } else {
+                    cart[index].quantity = quantity;
+                    renderCart();
+                }
+            });
+        })
+
+        const totalPriceSelector = document.querySelector(".total-price");
+        const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        totalPriceSelector.textContent = `$${total}`;
+    }
+}

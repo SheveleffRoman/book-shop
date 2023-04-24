@@ -37,3 +37,23 @@ body {
 .error.active {
     padding: 0.3em;
 }
+
+.subTotal {
+    background-color: #b2abab;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 500px;
+    z-index: 1;
+    padding: 15px;
+}
+
+.hide {
+    display: none;
+}
