@@ -535,13 +535,11 @@ function runCart() {
                 const quantity = parseInt(event.target.value);
                 if (quantity <= 0) {
                     removeFromCart(index);
-                    const removeBtn = li.querySelector('input').nextElementSibling;
-                    // console.log(removeBtn);
-                    const card = document.getElementById(`${removeBtn.dataset.id}`);
-                    card.classList.remove('inCart');
-                    const btn = document.querySelector(`button.addToCart[data-id="${removeBtn.dataset.id}"]`);
-                    btn.removeAttribute('disabled');
-                    btn.textContent = 'Add to Cart';
+                    if (cart.length >= 1) {
+                        return;
+                    }
+                    const exit = document.querySelector('.goMain')
+                    window.location.href = exit.firstChild.href
                 } else {
                     cart[index].quantity = quantity;
                     renderCart();
