@@ -11,81 +11,86 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-<main>
-    <header></header>
-    <section class="cart">
-    </section>
-    <section class="subTotal hide">
+<div class="wrapper">
+    <header>
+        <div class="logo"><h1 class="title">Book Heaven</h1>
+            <h2 class="subTitle">Discover Your Next Favorite Read</h2></div>
+    </header>
+    <main>
+        <section class="cartSection">
+        </section>
+        <section class="subTotal hide">
 
-    </section>
-    <section class="form">
-        <form id="formCheckout" novalidate>
-            <h2 class="form-title">Please fill the following purchase order form:</h2>
-            <fieldset class="personal-info">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" pattern="[A-Za-zА-Яа-я]+" minlength="4" required>
-                <span class="error" aria-live="polite"></span>
+        </section>
+        <section class="form">
+            <form id="formCheckout" novalidate>
+                <h2 class="form-title">Please fill the following purchase order form:</h2>
+                <fieldset class="personal-info">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" pattern="[A-Za-zА-Яа-я]+" minlength="4" required>
+                    <span class="error" aria-live="polite"></span>
 
-                <label for="surname">Surname:</label>
-                <input type="text" id="surname" name="surname" pattern="[A-Za-zА-Яа-я]+" required minlength="5">
-                <span class="error" aria-live="polite"></span>
-            </fieldset>
-            <fieldset class="address">
-                <legend>Delivery information:</legend>
-                <label for="street">Street:</label>
-                <input type="text" id="street" name="street" required minlength="5">
-                <span class="error" aria-live="polite"></span>
+                    <label for="surname">Surname:</label>
+                    <input type="text" id="surname" name="surname" pattern="[A-Za-zА-Яа-я]+" required minlength="5">
+                    <span class="error" aria-live="polite"></span>
+                </fieldset>
+                <fieldset class="address">
+                    <legend>Delivery information:</legend>
+                    <label for="street">Street:</label>
+                    <input type="text" id="street" name="street" required minlength="5">
+                    <span class="error" aria-live="polite"></span>
 
-                <label for="house-number">House number:</label>
-                <input type="number" id="house-number" name="house-number" required min="1">
-                <span class="error" aria-live="polite"></span>
+                    <label for="house-number">House number:</label>
+                    <input type="number" id="house-number" name="house-number" required min="1">
+                    <span class="error" aria-live="polite"></span>
 
-                <label for="flat-number">Flat number:</label>
-                <input type="text" id="flat-number" name="flat-number" pattern="^(?!-)[0-9-]+$" required>
-                <span class="error" aria-live="polite"></span>
+                    <label for="flat-number">Flat number:</label>
+                    <input type="text" id="flat-number" name="flat-number" pattern="^(?!-)[0-9-]+$" required>
+                    <span class="error" aria-live="polite"></span>
 
-                <label for="delivery-date">Delivery date:</label>
-                <input type="date" id="delivery-date" name="delivery-date" required min="" max="">
-                <span class="error" aria-live="polite"></span>
-            </fieldset>
-            <fieldset id="payment">
-                <legend>Please choose payment method:</legend>
-                <div>
-                    <input type="radio" id="cash" name="payment" value="cash" required>
-                    <label for="cash">Cash</label>
-                </div>
-                <div>
-                    <input type="radio" id="card" name="payment" value="card" required>
-                    <label for="card">Card</label>
-                </div>
-                <span class="error" aria-live="polite"></span>
-            </fieldset>
-            <fieldset id="gifts">
-                <legend>Choose your gifts (max 2 items):</legend>
-                <div>
-                    <input type="checkbox" id="pack" name="gift" value="pack" required>
-                    <label for="pack">Pack as a gift</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="postcard" name="gift" value="postcard" required>
-                    <label for="postcard">Add postcard</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="discount" name="gift" value="discount" required>
-                    <label for="discount">Provide 2% discount to the next time</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="pen" name="gift" value="pen" required>
-                    <label for="pen">Branded pen or pencil</label>
-                </div>
-                <span class="error" aria-live="polite"></span>
-            </fieldset>
-            <button type="submit" class="form-submit-button" title="Fill required fields" disabled>Confirm</button>
-<!--            <button type="reset">Reset</button>-->
-            <button class="goMain"><a href="./index.html">Main page</a></button>
-        </form>
-    </section>
-</main>
+                    <label for="delivery-date">Delivery date:</label>
+                    <input type="date" id="delivery-date" name="delivery-date" required min="" max="">
+                    <span class="error" aria-live="polite"></span>
+                </fieldset>
+                <fieldset id="payment">
+                    <legend>Please choose payment method:</legend>
+                    <div>
+                        <input type="radio" id="cash" name="payment" value="cash" required>
+                        <label for="cash">Cash</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="card" name="payment" value="card" required>
+                        <label for="card">Card</label>
+                    </div>
+                    <span class="error" aria-live="polite"></span>
+                </fieldset>
+                <fieldset id="gifts">
+                    <legend>Choose your gifts (max 2 items):</legend>
+                    <div>
+                        <input type="checkbox" id="pack" name="gift" value="pack" required>
+                        <label for="pack">Pack as a gift</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="postcard" name="gift" value="postcard" required>
+                        <label for="postcard">Add postcard</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="discount" name="gift" value="discount" required>
+                        <label for="discount">Provide 2% discount to the next time</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="pen" name="gift" value="pen" required>
+                        <label for="pen">Branded pen or pencil</label>
+                    </div>
+                    <span class="error" aria-live="polite"></span>
+                </fieldset>
+                <button type="submit" class="form-submit-button" title="Fill required fields" disabled>Confirm</button>
+                <!--            <button type="reset">Reset</button>-->
+                <button class="goMain"><a href="./index.html">Main page</a></button>
+            </form>
+        </section>
+    </main>
+</div>
 <script src="form.js"></script>
 </body>
 </html>

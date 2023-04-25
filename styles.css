@@ -108,6 +108,15 @@ h4 {
     font-weight: 400;
 }
 
+h5 {
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
+.cart > h2 {
+    font-size: 1.5rem;
+}
+
 .bag {
     display: flex;
     flex-direction: column;
@@ -276,31 +285,86 @@ h4 {
 
 .cart {
     width: 100%;
-    height: 250px;
     background-color: #e3e3e3;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 50px;
+    padding: 10px;
 }
 
 .empty {
     display: none;
 }
 
-.mini {
-    height: 150px;
-    width: 100px;
-    margin: 1rem;
+.mini-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-shrink: 0;
+    width: 250px;
+    margin: 0.94rem;
+    border-radius: 2px;
+    border: solid 1px #e3e3e3;
+    position: relative;
+    padding: 1.25rem;
+    flex-wrap: wrap;
 }
 
 .cart-items {
     display: flex;
-    margin-bottom: 50px;
+    flex-wrap: wrap;
 }
 
 .price {
     position: absolute;
     right: 130px;
     font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.mini-card-content {
+    display: flex;
+    width: 100%;
+    max-height: 150px;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.mini-card-creds {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+
+.img-mini {
+    height: 150px;
+    width: 100px;
+}
+
+h5.mini-card-title {
+    margin: 0;
+}
+
+h5.mini-card-author {
+    margin: 0;
+}
+
+div.mini-card-order > input[type=number] {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+div.mini-card-order > button {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+div.mini-card-order > button:hover {
+    background-color: #ccc;
 }
