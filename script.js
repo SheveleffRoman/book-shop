@@ -215,6 +215,7 @@ function runCart() {
         document.cookie = "cart=" + cartJson + "; path=/";
         // console.log(document.cookie);
         if (cart.length === 0) {
+            alert("Your cart is empty!");
             return;
         }
         window.location.href = checkoutBtn.href;

@@ -125,6 +125,10 @@ h5 {
     position: relative;
 }
 
+.bag:hover {
+    cursor: pointer;
+}
+
 .fa-2xl {
     line-height: 3rem !important;
 
