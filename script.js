@@ -181,23 +181,45 @@ function runCart() {
         button.addEventListener("click", addToCart);
     });
 
+
+    // const checkoutBtn = document.getElementById('checkout');
+    // console.log(checkoutBtn);
+    // checkoutBtn.addEventListener("click", function (event) {
+    //     // Отменяем стандартное поведение ссылки, чтобы не переходить на новую страницу
+    //     event.preventDefault();
+    //
+    //     // Получаем данные корзины и преобразуем их в строку JSON
+    //     let cartJson = JSON.stringify(cart);
+    //     console.log(cartJson)
+    //
+    //     // Сохраняем данные корзины в cookie
+    //     document.cookie = "cart=" + cartJson + "; path=/";
+    //     console.log(document.cookie)
+    //
+    //     // Переходим на страницу оформления заказа
+    //     window.location.href = this.href;
+    // });
+
     const checkoutBtn = document.getElementById('checkout');
-    console.log(checkoutBtn);
-    checkoutBtn.addEventListener("click", function(event) {
-        // Отменяем стандартное поведение ссылки, чтобы не переходить на новую страницу
+    bagDiv.addEventListener('click', proceedToCheckout);
+    checkoutBtn.addEventListener('click', proceedToCheckout);
+
+    function proceedToCheckout(event) {
         event.preventDefault();
 
         // Получаем данные корзины и преобразуем их в строку JSON
         let cartJson = JSON.stringify(cart);
-        console.log(cartJson)
+        // console.log(cartJson)
 
         // Сохраняем данные корзины в cookie
         document.cookie = "cart=" + cartJson + "; path=/";
-        console.log(document.cookie)
+        // console.log(document.cookie);
+        if (cart.length === 0) {
+            return;
+        }
+        window.location.href = checkoutBtn.href;
+    }
 
-        // Переходим на страницу оформления заказа
-        window.location.href = this.href;
-    });
 
     function renderCart() {
         // Очищаем элементы корзины
@@ -207,8 +229,8 @@ function runCart() {
         cart.forEach((item, index) => {
             // Создаем элемент списка товаров в корзине
             // в кнопку удаления записываем дата-аттрибут из кнопки "добавить в корзину", чтоб их связать
-            const li = createHTMLTag(cartItems, 'li', {'class': 'mini'},
-                `<img src="${item.img}"> $${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">Delete</button>`);
+            const li = createHTMLTag(cartItems, 'li', {'class': 'mini-card'},
+                `<div class="mini-card-content"><img class="img-mini" src="${item.img}"><div class="mini-card-creds"><h5 class="mini-card-title">${dataArray[item.id].title}</h5><h5 class="mini-card-author">${dataArray[item.id].author}</h5></div></div><div class="mini-card-order">$${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">&#128465;</button></div>`);
 
 
             // Добавляем обработчик события на кнопку удаления товара из корзины

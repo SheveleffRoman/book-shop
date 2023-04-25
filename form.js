@@ -500,7 +500,7 @@ function submitForm() {
 }
 
 
-const cartSection = document.querySelector('.cart')
+const cartSection = document.querySelector('.cartSection')
 console.log(cartSection)
 
 function runCart() {
@@ -519,8 +519,8 @@ function runCart() {
     function renderCart() {
         cartItems.innerHTML = "";
         cart.forEach((item, index) => {
-            const li = createHTMLTag(cartItems, 'li', {'class': 'mini'},
-                `<img src="${item.img}"> $${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">Delete</button>`);
+            const li = createHTMLTag(cartItems, 'li', {'class': 'mini-card'},
+                `<div class="mini-card-content"><img class="img-mini" src="${item.img}"><div class="mini-card-creds"><h5 class="mini-card-title">${dataArray[item.id].title}</h5><h5 class="mini-card-author">${dataArray[item.id].author}</h5></div></div><div class="mini-card-order">$${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">&#128465;</button></div>`);
 
             li.querySelector(".remove-from-cart").addEventListener("click", () => {
                 removeFromCart(index);
