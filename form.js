@@ -526,7 +526,7 @@ function runCart() {
                 removeFromCart(index);
                 if (cart.length < 1) {
                     const exit = document.querySelector('.goMain')
-                    window.location.href = exit.firstChild.href
+                    window.location.href = exit.href
 
                 }
             });
@@ -539,7 +539,7 @@ function runCart() {
                         return;
                     }
                     const exit = document.querySelector('.goMain')
-                    window.location.href = exit.firstChild.href
+                    window.location.href = exit.href
                 } else {
                     cart[index].quantity = quantity;
                     renderCart();
