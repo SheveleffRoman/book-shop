@@ -8,8 +8,9 @@
     --card-added-color: #595555;
     --modal-color: #bbbbbb;
     --modal-info-color: #a66369;
-    --button-color: #eb3246;
-    --button-text-color: #fff;
+    --button-color: #fff;
+    --button-text-color: #eb3246;
+    --button-bag-text: #fff;
     --button-border-color: #fc96a3;
     --button-hover: #ffeaec;
 }
@@ -155,9 +156,9 @@ h5 {
     padding: 0 4px;
     top: 0;
     right: 5px;
-    border: 1px solid var(--button-color);
-    background-color: var(--button-color);
-    color: var(--button-text-color);
+    border: 1px solid var(--button-text-color);
+    background-color: var(--button-text-color);
+    color: var(--button-bag-text);
     border-radius: 1em;
     text-align: center;
 }
@@ -221,10 +222,10 @@ h5 {
 }
 
 .addToCart, .showMore, .removeItem {
-    color: var(--button-color);
+    color: var(--button-text-color);
     border-radius: 0.125rem;
     border: solid 1px var(--button-border-color);
-    background-color: var(--button-text-color);
+    background-color: var(--button-color);
     padding: 0 0.75rem;
     font-weight: 500;
 }
@@ -288,10 +289,10 @@ h5 {
     position: absolute;
     top: 7px;
     right: 7px;
-    background-color: var(--button-color);
+    background-color: var(--button-text-color);
     border: none;
     border-radius: 50%;
-    color: var(--button-text-color);
+    color: var(--button-bag-text);
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
@@ -338,6 +339,9 @@ h5 {
     right: 130px;
     font-weight: bold;
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
 }
 
 .mini-card-content {
@@ -383,4 +387,19 @@ div.mini-card-order > button {
 
 div.mini-card-order > button:hover {
     background-color: #ccc;
+}
+
+#checkout {
+    text-decoration: none;
+    color: var(--button-text-color);
+    border-radius: 0.125rem;
+    border: solid 1px var(--button-border-color);
+    background-color: var(--button-color);
+    padding: 0 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+#checkout:hover {
+    background-color: var(--button-hover);
 }

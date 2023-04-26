@@ -65,9 +65,24 @@ body {
 
 .form-submit-button, .goMain {
     margin-top: 1rem;
+    cursor: pointer;
 }
 
-.goMain > a {
+.form-submit-button:disabled {
+    cursor: default;
+}
+
+.goMain {
     text-decoration: none;
-    color: var(--text-color);
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 2px;
+    background-color: rgb(239, 239, 239);
+    padding: 2px 6px;
+}
+
+.goMain:hover {
+    background-color: rgb(229, 229, 229);
+    border: 1px solid rgb(47, 47, 47);
 }
