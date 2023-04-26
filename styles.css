@@ -1,5 +1,17 @@
 :root {
-
+    --header-color: #646da9;
+    --cart-color: #e3e3e3;
+    --body-color: #eeffff;
+    --text-color: #050505;
+    --card-color: transparent;
+    --card-border-color: #e3e3e3;
+    --card-added-color: #595555;
+    --modal-color: #bbbbbb;
+    --modal-info-color: #a66369;
+    --button-color: #eb3246;
+    --button-text-color: #fff;
+    --button-border-color: #fc96a3;
+    --button-hover: #ffeaec;
 }
 
 *,
@@ -19,7 +31,8 @@ body {
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
-    background-color: #eeffff;
+    background-color: var(--body-color);
+    color: var(--text-color);
 
 }
 body,
@@ -76,7 +89,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #646da9;
+    background-color: var(--header-color);
     position: fixed;
     top: 0;
     z-index: 5;
@@ -142,10 +155,9 @@ h5 {
     padding: 0 4px;
     top: 0;
     right: 5px;
-    border: 1px solid;
-    border-color: #eb3246;
-    background-color: #eb3246;
-    color: #fff;
+    border: 1px solid var(--button-color);
+    background-color: var(--button-color);
+    color: var(--button-text-color);
     border-radius: 1em;
     text-align: center;
 }
@@ -170,7 +182,8 @@ h5 {
     height: 420px;
     margin: 0.94rem;
     border-radius: 2px;
-    border: solid 1px #e3e3e3;
+    border: solid 1px var(--card-border-color);
+    background-color: var(--card-color);
     position: relative;
     padding: 1.25rem;
 }
@@ -208,10 +221,10 @@ h5 {
 }
 
 .addToCart, .showMore, .removeItem {
-    color: #eb3246;
+    color: var(--button-color);
     border-radius: 0.125rem;
-    border: solid 1px #fc96a3;
-    background-color: #fff;
+    border: solid 1px var(--button-border-color);
+    background-color: var(--button-text-color);
     padding: 0 0.75rem;
     font-weight: 500;
 }
@@ -219,7 +232,7 @@ h5 {
 .addToCart:hover,
 .showMore:hover,
 .removeItem:hover {
-    background-color: #ffeaec;
+    background-color: var(--button-hover);
     cursor: pointer;
 }
 
@@ -232,11 +245,11 @@ h5 {
 }
 
 .inCart {
-    background-color: #595555;
+    background-color: var(--card-added-color);
 }
 
 .modalWindowContainer {
-    background-color: #595555;
+    background-color: var(--modal-color);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -258,28 +271,27 @@ h5 {
 .imgModal {
     width: 300px;
     height: 400px;
-    background-color: white;
+    background-color: transparent;
 }
 
 .descrModal {
     width: 400px;
     height: 400px;
-    background-color: darkslategray;
+    background-color: var(--modal-info-color);
 }
 
 .description {
     height: 70%;
-    background-color: #a66369;
 }
 
 .modalClose {
     position: absolute;
     top: 7px;
     right: 7px;
-    background-color: #78ad36; /* Green */
+    background-color: var(--button-color);
     border: none;
     border-radius: 50%;
-    color: white;
+    color: var(--button-text-color);
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
@@ -289,7 +301,7 @@ h5 {
 
 .cart {
     width: 100%;
-    background-color: #e3e3e3;
+    background-color: var(--cart-color);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -310,7 +322,7 @@ h5 {
     width: 250px;
     margin: 0.94rem;
     border-radius: 2px;
-    border: solid 1px #e3e3e3;
+    border: solid 1px var(--card-border-color);
     position: relative;
     padding: 1.25rem;
     flex-wrap: wrap;
