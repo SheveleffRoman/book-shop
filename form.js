@@ -527,7 +527,6 @@ function runCart() {
                 if (cart.length < 1) {
                     const exit = document.querySelector('.goMain')
                     window.location.href = exit.href
-
                 }
             });
 
