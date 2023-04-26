@@ -231,7 +231,7 @@ function runCart() {
             // Создаем элемент списка товаров в корзине
             // в кнопку удаления записываем дата-аттрибут из кнопки "добавить в корзину", чтоб их связать
             const li = createHTMLTag(cartItems, 'li', {'class': 'mini-card'},
-                `<div class="mini-card-content"><img class="img-mini" src="${item.img}"><div class="mini-card-creds"><h5 class="mini-card-title">${dataArray[item.id].title}</h5><h5 class="mini-card-author">${dataArray[item.id].author}</h5></div></div><div class="mini-card-order">$${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">&#128465;</button></div>`);
+                `<div class="mini-card-content"><img class="img-mini" src="${item.img}" alt="${dataArray[item.id].title}"><div class="mini-card-creds"><h5 class="mini-card-title">${dataArray[item.id].title}</h5><h5 class="mini-card-author">${dataArray[item.id].author}</h5></div></div><div class="mini-card-order">$${item.price} x <input type="number" value="${item.quantity}" min="1" max="5"> <button class="remove-from-cart" data-id="${item.id}">&#128465;</button></div>`);
 
 
             // Добавляем обработчик события на кнопку удаления товара из корзины
