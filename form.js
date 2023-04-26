@@ -485,7 +485,7 @@ submitButton.addEventListener('click', (event) => {
                           <div>Date: ${data['delivery-date']}</div>
                           <div>Payment type: ${data.payment}</div>
                           <div>Gifts: ${giftsString}</div>
-                          <a class="toMain" href="index.html">To main page</a>
+                          <a class="toMain" href="./index.html">To main page</a>
 </div>`
     subTotal.classList.remove('hide')
     submitForm()
