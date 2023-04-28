@@ -1,18 +1,21 @@
 :root {
-    --header-color: #646da9;
+    --header-color: #3c72bf;
     --cart-color: #e3e3e3;
-    --body-color: #eeffff;
+    --body-color: white;
     --text-color: #050505;
-    --card-color: transparent;
+    --card-back-color: #fff;
     --card-border-color: #e3e3e3;
-    --card-added-color: #595555;
-    --modal-color: #bbbbbb;
+    --card-added-color: #e3e3e3;
+    --modal-back-color: #e3e3e3;
     --modal-info-color: #a66369;
-    --button-color: #fff;
-    --button-text-color: #eb3246;
+    --modal-close-color: #3c72bf;
+    --button-card-back-color: #3c72bf;
+    --button-card-text-color: #fff;
+    --button-card-hover: #3262a7;
+    --button-bag-color: #eb3246;
     --button-bag-text: #fff;
     --button-border-color: #fc96a3;
-    --button-hover: #ffeaec;
+    --button-checkout-hover: #ffeaec;
 }
 
 *,
@@ -114,7 +117,8 @@ h2 {
 }
 
 h3 {
-    font-size: 0.95rem;
+    font-size: 0.90rem;
+    font-weight: 600;
 }
 
 h4 {
@@ -156,8 +160,8 @@ h5 {
     padding: 0 4px;
     top: 0;
     right: 5px;
-    border: 1px solid var(--button-text-color);
-    background-color: var(--button-text-color);
+    border: 1px solid var(--button-bag-color);
+    background-color: var(--button-bag-color);
     color: var(--button-bag-text);
     border-radius: 1em;
     text-align: center;
@@ -184,7 +188,7 @@ h5 {
     margin: 0.94rem;
     border-radius: 2px;
     border: solid 1px var(--card-border-color);
-    background-color: var(--card-color);
+    background-color: var(--card-back-color);
     position: relative;
     padding: 1.25rem;
 }
@@ -222,18 +226,32 @@ h5 {
 }
 
 .addToCart, .showMore, .removeItem {
-    color: var(--button-text-color);
+    color: var(--button-card-text-color);
+    background-color: var(--button-card-back-color);
+    min-width: 5.5rem;
+    height: 2rem;
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    border: none;
     border-radius: 0.125rem;
-    border: solid 1px var(--button-border-color);
-    background-color: var(--button-color);
-    padding: 0 0.75rem;
-    font-weight: 500;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: .875rem;
+    transition: background-color .2s;
+    cursor: pointer;
+    /*font-family: AlergiaNormal,"Segoe UI","San Francisco",sans-serif;*/
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .addToCart:hover,
 .showMore:hover,
 .removeItem:hover {
-    background-color: var(--button-hover);
+    background-color: var(--button-card-hover);
+    color: var(--button-card-text-color);
     cursor: pointer;
 }
 
@@ -250,7 +268,7 @@ h5 {
 }
 
 .modalWindowContainer {
-    background-color: var(--modal-color);
+    background-color: var(--modal-back-color);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -278,7 +296,7 @@ h5 {
 .descrModal {
     width: 400px;
     height: 400px;
-    background-color: var(--modal-info-color);
+    /*background-color: var(--modal-info-color);*/
 }
 
 .description {
@@ -289,10 +307,10 @@ h5 {
     position: absolute;
     top: 7px;
     right: 7px;
-    background-color: var(--button-text-color);
+    background-color: var(--modal-close-color);
     border: none;
     border-radius: 50%;
-    color: var(--button-bag-text);
+    color: #fff;
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
@@ -358,8 +376,6 @@ h5 {
     justify-content: space-around;
 }
 
-
-
 .img-mini {
     height: 150px;
     width: 100px;
@@ -391,17 +407,17 @@ div.mini-card-order > button:hover {
 
 #checkout {
     text-decoration: none;
-    color: var(--button-text-color);
+    color: #eb3246;
     border-radius: 0.125rem;
-    border: solid 1px var(--button-border-color);
-    background-color: var(--button-color);
+    border: solid 1px #fc96a3;
+    background-color: #fff;
     padding: 0 0.75rem;
     font-weight: 600;
     font-size: 1rem;
 }
 
 #checkout:hover {
-    background-color: var(--button-hover);
+    background-color: var(--button-checkout-hover);
 }
 
 .noscroll {
