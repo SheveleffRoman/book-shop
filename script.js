@@ -51,8 +51,7 @@ const bagDiv = createHTMLTag(header, 'div', {
     'class': 'bag'
 }, '<i class="fa-solid fa-cart-shopping fa-2xl"></i><span class="itemsBag zero"><span>0</span></span><span>Your cart</span>');
 const main = createHTMLTag(wrapper, 'main')
-const bookCatalog = createHTMLTag(main, 'div', {'id': 'catalog', 'class': 'bookCatalog'})
-
+const bookCatalog = createHTMLTag(main, 'div', {'id': 'catalog', 'class': 'bookCatalog'});
 
 const modalWindow = createHTMLTag(wrapper, 'div', {'class': 'modalWindowContainer hideModal'}, '', 'afterend');
 const imgModal = createHTMLTag(modalWindow, 'div', {'class': 'imgModal'}, '');
@@ -97,7 +96,8 @@ function openModal() {
     buttons.forEach((item) => {
         item.addEventListener('click', () => {
             pasteContentModalWindow(item.dataset.id);
-            modalWindow.classList.remove('hideModal')
+            modalWindow.classList.remove('hideModal');
+            body.classList.add('noscroll');
         })
     })
 }
@@ -110,7 +110,10 @@ function pasteContentModalWindow(i) {
 }
 
 function closeModal() {
-    modalCloseBtn.addEventListener('click', () => modalWindow.classList.add('hideModal'))
+    modalCloseBtn.addEventListener('click', () => {
+        modalWindow.classList.add('hideModal');
+        body.classList.remove('noscroll');
+    })
 }
 
 
