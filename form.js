@@ -476,8 +476,10 @@ submitButton.addEventListener('click', (event) => {
     console.log(data);*/
 
     const giftsString = selectedGifts.join(", ");
+    const totalPrice = document.querySelector('span.total-price').textContent
 
-    subTotal.innerHTML = `<h1>Your order successfully created</h1>
+    subTotal.innerHTML = `<h1>Your order successfully created!</h1>
+                          <h2>Total price: ${totalPrice}</h2>
                           <div class="orderSummary"><ol class="orderInfo"></ol>
                           <div class="customerInfo">
                           <div>Customer: ${data.name} ${data.surname}</div>
@@ -486,15 +488,15 @@ submitButton.addEventListener('click', (event) => {
                           <div>Date: ${data['delivery-date']}</div>
                           <div>Payment type: ${data.payment}</div>
                           <div>Gifts: ${giftsString}</div>
-</div></div><a class="toMain" href="./index.html">To main page</a>`
+</div></div><a class="goMain" id="toMain" href="./index.html">To main page</a>`
     subTotal.classList.remove('hide');
     insertCartToOrder();
     submitForm()
 })
 
 function submitForm() {
-    const goMainPage = document.querySelector('.toMain')
-    goMainPage.addEventListener('click', () => {
+    const goMainPage = document.querySelector('#toMain')
+    goMainPage.addEventListener('click', (event) => {
         form.submit()
     })
 }
@@ -502,7 +504,7 @@ function submitForm() {
 function insertCartToOrder() {
     cart.forEach((item) => {
         const order = document.querySelector('ol.orderInfo');
-        const insertLi = createHTMLTag(order, 'li', {}, `${dataArray[item.id].title}`)
+        const insertLi = createHTMLTag(order, 'li', {}, `${dataArray[item.id].title}, amount: ${item.quantity}`)
     })
 }
 
