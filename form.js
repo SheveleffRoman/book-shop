@@ -554,7 +554,6 @@ function runCart() {
                 }
             });
         })
-
         const totalPriceSelector = document.querySelector(".total-price");
         const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
         totalPriceSelector.textContent = `$${total}`;
