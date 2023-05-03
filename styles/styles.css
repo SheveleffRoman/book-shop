@@ -177,6 +177,12 @@ h5 {
     justify-content: center;
 }
 
+.bookCatalog::after {
+    content: "";
+    width: 530px;
+    margin: 0.94rem;
+}
+
 .card {
     display: flex;
     flex-direction: column;
