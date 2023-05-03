@@ -5,7 +5,7 @@ console.log(cart);
 let dataArray;
 
 function getData() {
-    return fetch('./assets/books.json')
+    return fetch('../assets/books.json')
         .then(response => response.json())
         .then(data => {
             dataArray = data;
@@ -18,26 +18,7 @@ getData().then(dataArray => {
     runCart();
 });
 
-function createHTMLTag(parentElement = null, tagName, attributes = {}, content = '', where = 'beforeend') {
-    const element = document.createElement(tagName);
-
-    // Добавляем произвольные атрибуты: id, class, etc
-    for (const key in attributes) {
-        element.setAttribute(key, attributes[key]);
-    }
-
-    // Добавляем произвольный контент
-    if (content !== '') {
-        element.innerHTML = content;
-    }
-
-    // Вставляем элемент после указанного родительского элемента
-    if (parentElement !== null) {
-        parentElement.insertAdjacentElement(where, element);
-    }
-
-    return element;
-}
+import {createHTMLTag} from "./createElem.js";
 
 // const form = document.querySelector('form');
 // const nameInput = form.querySelector('#name');
@@ -488,7 +469,7 @@ submitButton.addEventListener('click', (event) => {
                           <div>Date: ${data['delivery-date']}</div>
                           <div>Payment type: ${data.payment}</div>
                           <div>Gifts: ${giftsString}</div>
-</div></div><a class="goMain" id="toMain" href="./index.html">To main page</a>`
+</div></div><a class="goMain" id="toMain" href="../pages/index.html">To main page</a>`
     subTotal.classList.remove('hide');
     insertCartToOrder();
     submitForm()

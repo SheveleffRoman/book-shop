@@ -1,7 +1,7 @@
 let dataArray;
 
 function getData() {
-    return fetch('./assets/books.json')
+    return fetch('../assets/books.json')
         .then(response => response.json())
         .then(data => {
             dataArray = data;
@@ -19,27 +19,8 @@ getData().then(dataArray => {
     dragAndDrop(); // перетаскивания карточек
 });
 
-
-function createHTMLTag(parentElement = null, tagName, attributes = {}, content = '', where = 'beforeend') {
-    const element = document.createElement(tagName);
-
-    // Добавляем произвольные атрибуты: id, class, etc
-    for (const key in attributes) {
-        element.setAttribute(key, attributes[key]);
-    }
-
-    // Добавляем произвольный контент
-    if (content !== '') {
-        element.innerHTML = content;
-    }
-
-    // Вставляем элемент после указанного родительского элемента
-    if (parentElement !== null) {
-        parentElement.insertAdjacentElement(where, element);
-    }
-
-    return element;
-}
+// import {createHTMLTag} from "./createElem.js";
+import {createHTMLTag} from "./createElem.js";
 
 // const main = document.querySelector('main');
 const body = document.querySelector('body');
