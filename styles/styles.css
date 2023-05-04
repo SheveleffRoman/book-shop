@@ -172,15 +172,12 @@ h5 {
 }
 
 .bookCatalog {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.bookCatalog::after {
-    content: "";
-    width: 530px;
-    margin: 0.94rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-rows: repeat(2, auto);
+    justify-items: center;
+    grid-gap: 1rem;
+    padding: 0 2rem;
 }
 
 .card {
